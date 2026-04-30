@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react"
 
 export default function QuestionTimer({ timeout, onTimeout }) {
@@ -12,8 +13,8 @@ export default function QuestionTimer({ timeout, onTimeout }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRemainingTime((prevRemainingTime) => prevRemainingTime - 100)
-    }, 100)
+      setRemainingTime((prevRemainingTime) => prevRemainingTime - 10)
+    }, 10)
     return () => {
       clearInterval(interval)
     }

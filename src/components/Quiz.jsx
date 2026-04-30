@@ -3,9 +3,10 @@ import { useCallback, useState } from "react"
 import QUESTIONS from "../questions"
 import quizOverImg from "../assets/quiz-complete.png"
 import QuestionTimer from "./QuestionTimer"
+import Answers from "./Answers"
 
 export default function Quiz() {
-  let MAXTIME = 15000
+  let MAXTIME = 10000
   const [answerState, setAnswerState] = useState("")
   const [userAnswers, setUserAnswers] = useState([])
 
@@ -20,7 +21,7 @@ export default function Quiz() {
         return [...prevUserAnswers, selectedAnswer]
       })
       setTimeout(() => {
-        if (QUESTIONS[activeQuestionIndex].answers[0]) {
+        if (QUESTIONS[activeQuestionIndex].answers[0] === selectedAnswer) {
           setAnswerState("correct")
         } else {
           setAnswerState("incorrect")
@@ -47,14 +48,10 @@ export default function Quiz() {
     )
   }
 
-  const shuffledAnswers = [...QUESTIONS[activeQuestionIndex].answers]
-  shuffledAnswers.sort(() => Math.random() - 0.5)
-
   return (
     <div id="quiz">
       {
         <div id="question">
-          {answerState}
           <h2>Question {activeQuestionIndex + 1}</h2>
           <QuestionTimer
             key={activeQuestionIndex}
@@ -64,34 +61,12 @@ export default function Quiz() {
           <p>{QUESTIONS[activeQuestionIndex].text}</p>
           <hr />
           <p>Select an answer</p>
-          <ul id="answers">
-            {shuffledAnswers.map((answer) => {
-              const isSelected = userAnswers[userAnswers.length - 1] === answer
-              let cssClass = ""
-
-              if (answerState === "answered" && isSelected) {
-                cssClass = "selected"
-              }
-
-              if (
-                (answerState === "correct" || answerState === "incorrect") &&
-                isSelected
-              ) {
-                cssClass = answerState
-              }
-
-              return (
-                <li className="answer" key={answer}>
-                  <button
-                    className={cssClass}
-                    onClick={() => handleSelectAnswer(answer)}
-                  >
-                    {answer}
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
+          <Answers
+            answers={QUESTIONS[activeQuestionIndex].answers}
+            selectedAnswer={userAnswers[userAnswers.length - 1]}
+            answerState={answerState}
+            onSelect={handleSelectAnswer}
+          />
         </div>
       }
     </div>
