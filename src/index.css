@@ -167,7 +167,7 @@ header h1 {
 .answer button:hover,
 .answer button:focus {
   /* background: linear-gradient(180deg, #bf48f6 0%, #9b50f2 100%); */
-  background: #9d5af5;
+  background: #9a55f4;
   color: white;
   /* box-shadow: 0 0 4px 2px rgba(255, 200, 60, 0.8); */
 }
